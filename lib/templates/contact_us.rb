@@ -13,6 +13,9 @@ ContactUs.setup do |config|
 
   # ==> Form Configuration
 
+  # Configure the form to ask for the users email address.
+  config.require_email = true
+
   # Configure the form to ask for the users name.
   config.require_name = false
 

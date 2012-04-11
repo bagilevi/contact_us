@@ -7,6 +7,9 @@ module ContactUs
   # Address to send ContactUs email notifications to.
   mattr_accessor :mailer_to
 
+  # Enable or Disable email field.
+  mattr_accessor :require_email
+
   # Enable or Disable name field.
   mattr_accessor :require_name
 
@@ -20,3 +23,9 @@ module ContactUs
   end
 
 end
+
+# Defaults
+#
+# nil means value not set => so we set default value
+# false means value has been set
+ContactUs.require_email = true if ContactUs.require_email.nil?

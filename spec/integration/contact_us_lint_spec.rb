@@ -6,6 +6,7 @@ describe 'Contact Us page' do
     ActionMailer::Base.deliveries = []
     ContactUs.mailer_from = nil
     ContactUs.mailer_to = nil
+    ContactUs.require_email = true
     ContactUs.require_name = false
     ContactUs.require_subject = false
   end
@@ -137,6 +138,34 @@ describe 'Contact Us page' do
         it "An email should not have been sent" do
           ActionMailer::Base.deliveries.size.should == 0
         end
+      end
+    end
+  end
+
+  context 'with email field turned off' do
+
+    before do
+      ContactUs.require_email = false
+      visit contact_us_path
+    end
+
+    context "Submitting the form" do
+      before do
+        fill_in 'Message', :with => 'howdy'
+        click_button 'Submit'
+      end
+
+      it "I should be redirected to the homepage" do
+        current_path.should == "/"
+      end
+
+      it "An email should have been sent" do
+        ActionMailer::Base.deliveries.size.should == 1
+      end
+
+      it "The email should contain the message" do
+        mail = ActionMailer::Base.deliveries.last
+        mail.body.should match 'howdy'
       end
     end
   end

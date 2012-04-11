@@ -27,6 +27,20 @@ describe ContactUs::Contact do
 
     end
 
+    context 'with email field turned off' do
+
+      after do
+        ContactUs.require_email = true
+      end
+
+      before do
+        ContactUs.require_email = false
+      end
+
+      it {should_not validate_presence_of(:email)}
+
+    end
+
   end
 
   describe 'Methods' do

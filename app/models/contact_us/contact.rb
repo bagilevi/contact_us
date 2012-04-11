@@ -4,8 +4,8 @@ class ContactUs::Contact
 
   attr_accessor :email, :message, :name, :subject
 
-  validates :email,   :format => { :with => /^([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})$/i },
-                      :presence => true
+  validates :email,   :format => { :with => /^([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})$/i, :if => Proc.new{ContactUs.require_email} },
+                      :presence => {:if => Proc.new{ContactUs.require_email}}
   validates :message, :presence => true
   validates :name,    :presence => {:if => Proc.new{ContactUs.require_name}}
   validates :subject, :presence => {:if => Proc.new{ContactUs.require_subject}}
